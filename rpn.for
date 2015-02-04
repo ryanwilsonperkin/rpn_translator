@@ -60,8 +60,7 @@
           if (m .eq. 1) then
               exit
           else if  (m .eq. 40) then
-                  write (*,50)
-  50              format (1x, 'data input in error - no blanks')
+                  write (*, "(1x)") 'data input in error - no blanks'
                   cycle
           end if
 !
