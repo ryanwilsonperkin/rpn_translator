@@ -48,18 +48,18 @@
 ! FIRST BLANK SIGNALS END OF STRING (EMBEDDED BLANKS ARE NOT ALLOWED)
 ! IT IS ASSUMED THAT IF A CHARACTER IS NOT AN OPERATOR OR A
 ! PARENTHESIS, IT IS A VARIABLE.
-          DO 40 M = 1, 40
-          IF (SOURCE(M) .EQ. BLANK) EXIT
+          DO M = 1, 40
+              IF (SOURCE(M) .EQ. BLANK) EXIT
 !
 ! SET SHIER(M) TO ZERO, THEN CHANGE IT IF THE CHARACTER IS AN OPERATOR
 !     SHIER(M) = 0
-          IF (SOURCE(M) .EQ. LPAREN) SHIER(M) = 1
-          IF (SOURCE(M) .EQ. RPAREN) SHIER(M) = 2
-          IF (SOURCE(M) .EQ. PLUS
-     1        .OR. SOURCE(M) .EQ. MINUS) SHIER(M) = 3
-          IF (SOURCE(M) .EQ. ASTRSK 
-     1        .OR. SOURCE(M) .EQ. SLASH) SHIER(M) = 4
-  40      CONTINUE
+              IF (SOURCE(M) .EQ. LPAREN) SHIER(M) = 1
+              IF (SOURCE(M) .EQ. RPAREN) SHIER(M) = 2
+              IF (SOURCE(M) .EQ. PLUS
+     1            .OR. SOURCE(M) .EQ. MINUS) SHIER(M) = 3
+              IF (SOURCE(M) .EQ. ASTRSK 
+     1            .OR. SOURCE(M) .EQ. SLASH) SHIER(M) = 4
+          END DO
 !
 ! IF NORMAL EXIT IS TAKEN, THE CARD DID NOT CONTAIN A BLANK
           IF (M .EQ. 1) THEN
