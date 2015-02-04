@@ -27,12 +27,10 @@
      1     MINUS/1H-/, ASTRSK/1H*/, SLASH/1H//
 !
 ! INITIALIZE ARRAYS TO ZERO OR BLANK, AS APPROPRIATE
-  10  DO 20 L = 1, 40
-      SHIER(L) = 0
-      OHIER(L) = 0
-      OPSTCK(L) = BLANK
-      POLISH(L) = BLANK
-  20  CONTINUE
+  10  SHIER = 0
+      OHIER = 0
+      OPSTCK = BLANK
+      POLISH = BLANK
 !
 ! READ A 'DATA' CARD
       READ (*, 30) SOURCE
