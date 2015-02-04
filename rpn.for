@@ -28,16 +28,13 @@
       slash = ichar('/')
 
       do
-!
-! Initialize arrays to zero or blank, as appropriate
           shier = 0
           ohier = 0
           opstck = blank
           polish = blank
 !
 ! Read a 'data' card
-          read (*, 30) source
-  30      format (40a)
+          read (*, "(40a)") source
 !
 ! In the following do-loop, m points to input columns, from left to right
 ! First blank signals end of string (embedded blanks are not allowed)
