@@ -69,7 +69,6 @@
           ohier(1) = -1
 !
 ! Initialize pointers
-          i = 1
           j = 2
           k = 1
 
