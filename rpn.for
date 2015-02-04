@@ -1,105 +1,100 @@
-! TRANSLATING ALGRBRAIC EXPRESSIONS TO POLISH NOTATION
+! Translating algrbraic expressions to polish notation
 !
-! THE VARIABLE NAMES AND THEIR MEANINGS ARE AS FOLLOWS:
-!     SOURCE     THE INPUT STRING, IN NORMAL ALGEBRAIC FORM
-!     SHIER      ARRAY CONTAINING THE HIERARCHY NUMBERS OF THE INPUT
-!     OPSTCK     'OPERATOR STACK': THE OPERATORS FROM THE INPUT
-!     OHIER      ARRAY CONTAINING THE HIERARCHY NUMBERS OF THE OPERATORS
-!     POLISH     THE OUTPUT STRING, IN POLISH NOTATION
+! The variable names and their meanings are as follows:
+!     source     the input string, in normal algebraic form
+!     shier      array containing the hierarchy numbers of the input
+!     opstck     'operator stack': the operators from the input
+!     ohier      array containing the hierarchy numbers of the operators
+!     polish     the output string, in polish notation
 !
-!     L          DO INDEX USED IN INITIALIZING
-!     M          DO INDEX USED IN SETTING UP SHIER ARRAY
-!     I          POINTER TO INDEX STRING (SOURCE AND SHIER)
-!     J          POINTER TO OPERATOR STACK (OPSTCK AND OHIER)
-!     K          POINTER TO OUTPUT STRING (POLISH)
-!
-!     THE OTHER VARIABLES ARE ACTUALLY CONSTANTS, AND ARE
-!     DEFINED IN THE DATA STATEMENT.
-!
-!
+!     l          do index used in initializing
+!     m          do index used in setting up shier array
+!     i          pointer to index string (source and shier)
+!     j          pointer to operator stack (opstck and ohier)
+!     k          pointer to output string (polish)
 
       implicit none
 
-      integer :: I, J, K, L, M
-      integer(1), dimension(40) :: SOURCE, SHIER, OPSTCK, OHIER, POLISH
-      integer(1) :: BLANK, LPAREN, RPAREN, PLUS, MINUS, ASTRSK, SLASH
+      integer :: i, j, k, l, m
+      integer(1), dimension(40) :: source, shier, opstck, ohier, polish
+      integer(1) :: blank, lparen, rparen, plus, minus, astrsk, slash
       
-      BLANK = ICHAR(' ')
-      LPAREN = ICHAR('(')
-      RPAREN = ICHAR(')')
-      PLUS = ICHAR('+')
-      MINUS = ICHAR('-')
-      ASTRSK = ICHAR('*')
-      SLASH = ICHAR('/')
+      blank = ichar(' ')
+      lparen = ichar('(')
+      rparen = ichar(')')
+      plus = ichar('+')
+      minus = ichar('-')
+      astrsk = ichar('*')
+      slash = ichar('/')
 
-      DO
+      do
 !
-! INITIALIZE ARRAYS TO ZERO OR BLANK, AS APPROPRIATE
-          SHIER = 0
-          OHIER = 0
-          OPSTCK = BLANK
-          POLISH = BLANK
+! Initialize arrays to zero or blank, as appropriate
+          shier = 0
+          ohier = 0
+          opstck = blank
+          polish = blank
 !
-! READ A 'DATA' CARD
-          READ (*, 30) SOURCE
-  30      FORMAT (40A)
+! Read a 'data' card
+          read (*, 30) source
+  30      format (40a)
 !
-! IN THE FOLLOWING DO-LOOP, M POINTS TO INPUT COLUMNS, FROM LEFT TO RIGHT
-! FIRST BLANK SIGNALS END OF STRING (EMBEDDED BLANKS ARE NOT ALLOWED)
-! IT IS ASSUMED THAT IF A CHARACTER IS NOT AN OPERATOR OR A
-! PARENTHESIS, IT IS A VARIABLE.
-          DO M = 1, 40
-              IF (SOURCE(M) .EQ. BLANK) EXIT
+! In the following do-loop, m points to input columns, from left to right
+! First blank signals end of string (embedded blanks are not allowed)
+! It is assumed that if a character is not an operator or a
+! parenthesis, it is a variable.
+          do m = 1, 40
+              if (source(m) .eq. blank) exit
 !
-! SET SHIER(M) TO ZERO, THEN CHANGE IT IF THE CHARACTER IS AN OPERATOR
-!     SHIER(M) = 0
-              IF (SOURCE(M) .EQ. LPAREN) SHIER(M) = 1
-              IF (SOURCE(M) .EQ. RPAREN) SHIER(M) = 2
-              IF (SOURCE(M) .EQ. PLUS
-     1            .OR. SOURCE(M) .EQ. MINUS) SHIER(M) = 3
-              IF (SOURCE(M) .EQ. ASTRSK 
-     1            .OR. SOURCE(M) .EQ. SLASH) SHIER(M) = 4
-          END DO
+! Set shier(m) to zero, then change it if the character is an operator
+!     shier(m) = 0
+              if (source(m) .eq. lparen) shier(m) = 1
+              if (source(m) .eq. rparen) shier(m) = 2
+              if (source(m) .eq. plus
+     1            .or. source(m) .eq. minus) shier(m) = 3
+              if (source(m) .eq. astrsk 
+     1            .or. source(m) .eq. slash) shier(m) = 4
+          end do
 !
-! IF NORMAL EXIT IS TAKEN, THE CARD DID NOT CONTAIN A BLANK
-          IF (M .EQ. 1) THEN
-              EXIT
-          ELSE IF  (M .EQ. 40) THEN
-                  WRITE (*,50)
-  50              FORMAT (1X, 'DATA INPUT IN ERROR - NO BLANKS')
-                  CYCLE
-          END IF
+! If normal exit is taken, the card did not contain a blank
+          if (m .eq. 1) then
+              exit
+          else if  (m .eq. 40) then
+                  write (*,50)
+  50              format (1x, 'data input in error - no blanks')
+                  cycle
+          end if
 !
-! INITIALIZE HIERARCHY NUMBERS TO GET STARTED PROPERLY
-          SHIER(M) = 0
-          OHIER(1) = -1
+! Initialize hierarchy numbers to get started properly
+          shier(m) = 0
+          ohier(1) = -1
 !
-! INITIALIZE POINTERS
-          I = 1
-          J = 2
-          K = 1
+! Initialize pointers
+          i = 1
+          j = 2
+          k = 1
 
-          DO I = 1, M
-              IF ( SHIER(I) .EQ. 0 ) THEN !GO TO 90
-                  POLISH(K) = SOURCE(I)
-                  K = K + 1
-              ELSE IF ( SHIER(I) .EQ. 2 ) THEN !GO TO 80
-                  J = J - 1
-              ELSE
-                  OPSTCK(J) = SOURCE(I)
-                  OHIER(J) = SHIER(I)
-                  J = J + 1
-                  CYCLE
-              END IF
+          do i = 1, m
+              if ( shier(i) .eq. 0 ) then !go to 90
+                  polish(k) = source(i)
+                  k = k + 1
+              else if ( shier(i) .eq. 2 ) then !go to 80
+                  j = j - 1
+              else
+                  opstck(j) = source(i)
+                  ohier(j) = shier(i)
+                  j = j + 1
+                  cycle
+              end if
 
-              DO WHILE ( OHIER(J-1) .GE. SHIER(I + 1) )
-                  POLISH(K) = OPSTCK(J-1)
-                  K = K + 1
-                  J = J - 1
-              END DO
-          END DO
+              do while ( ohier(j-1) .ge. shier(i + 1) )
+                  polish(k) = opstck(j-1)
+                  k = k + 1
+                  j = j - 1
+              end do
+          end do
 
-          WRITE (*, 100) "INPUT: ", SOURCE, "RPN:   ", POLISH
- 100      FORMAT (1H ,A7, 40A1/1H , A7, 40A1)
-      END DO
-      END 
+          write (*, 100) "INPUT: ", source, "RPN:   ", polish
+ 100      format (1h ,a7, 40a1/1h , a7, 40a1)
+      end do
+      end 
