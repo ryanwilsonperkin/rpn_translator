@@ -16,27 +16,28 @@
       implicit none
 
       integer :: i, j, k, l, m
-      integer(1), dimension(40) :: source, shier, opstck, ohier, polish
+      character, dimension(40) :: opstck, polish, source
+      integer(1), dimension(40) :: shier, ohier
       
       do
           shier = 0
           ohier = 0
-          opstck = ichar(' ')
-          polish = ichar(' ')
+          opstck = ' '
+          polish = ' '
 
           read (*, "(40a)") source
 
           do m = 1, 40
               select case(source(m))
-              case (ichar(' '))
+              case (' ')
                   exit
-              case (ichar('('))
+              case ('(')
                   shier(m) = 1
-              case (ichar(')'))
+              case (')')
                   shier(m) = 2
-              case (ichar('+'), ichar('-'))
+              case ('+', '-')
                   shier(m) = 3
-              case (ichar('*'), ichar('/'))
+              case ('*', '/')
                   shier(m) = 4
               case default
                   shier(m) = 0
