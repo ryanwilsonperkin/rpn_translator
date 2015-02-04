@@ -78,47 +78,28 @@
           I = 1
           J = 2
           K = 1
-!
-! CHECK FOR OPERAND
-  70      IF ( SHIER(I) .EQ. 0 ) GO TO 90
-!
-! CHECK FOR RIGHT PARENTHESIS
-          IF ( SHIER(I) .EQ. 2 ) GO TO 80
-!
-! SOME OTHER OPERATOR IF HERE -- MOVE TO OPERATOR STACK
-          OPSTCK(J) = SOURCE(I)
-          OHIER(J) = SHIER(I)
-!
-! ADVANCE POINTERS
-          I = I + 1
-          J = J + 1
-          GO TO 70
-!
-! DELETE CORRESPONDING LEFT PARENTHESIS
-  80      I = I + 1
-          J = J - 1
-          GO TO 100
-!
-! MOVE OPERAND TO POLISH STRING
-  90      POLISH(K) = SOURCE(I)
-          I = I + 1
-          K = K + 1
-!
-! CHECK HIERARCHY RANKINGS
- 100      IF ( OHIER(J-1) .GE. SHIER(I) ) GO TO 110
-!
-! CHECK FOR END OF SOURCE STRING
-          IF ( I .EQ. M ) GO TO 120
-          GO TO 70
-!
-! MOVE OPERATOR TO POLISH STRING
- 110      POLISH(K) = OPSTCK(J-1)
-          K = K + 1
-          J = J - 1
-          GO TO 100
-!
-! WRITE SOURCE AND POLISH STRINGS
- 120      WRITE (*, 130) "INPUT: ", SOURCE, "RPN:   ", POLISH
- 130      FORMAT (1H ,A7, 40A1/1H , A7, 40A1)
+
+          DO I = 1, M
+              IF ( SHIER(I) .EQ. 0 ) THEN !GO TO 90
+                  POLISH(K) = SOURCE(I)
+                  K = K + 1
+              ELSE IF ( SHIER(I) .EQ. 2 ) THEN !GO TO 80
+                  J = J - 1
+              ELSE
+                  OPSTCK(J) = SOURCE(I)
+                  OHIER(J) = SHIER(I)
+                  J = J + 1
+                  CYCLE
+              END IF
+
+              DO WHILE ( OHIER(J-1) .GE. SHIER(I + 1) )
+                  POLISH(K) = OPSTCK(J-1)
+                  K = K + 1
+                  J = J - 1
+              END DO
+          END DO
+
+          WRITE (*, 100) "INPUT: ", SOURCE, "RPN:   ", POLISH
+ 100      FORMAT (1H ,A7, 40A1/1H , A7, 40A1)
       END DO
       END 
