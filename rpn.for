@@ -25,11 +25,7 @@
           polish = ichar(' ')
 
           read (*, "(40a)") source
-!
-! In the following do-loop, m points to input columns, from left to right
-! First blank signals end of string (embedded blanks are not allowed)
-! It is assumed that if a character is not an operator or a
-! parenthesis, it is a variable.
+
           do m = 1, 40
               select case(source(m))
               case (ichar(' '))
@@ -46,20 +42,16 @@
                   shier(m) = 0
               end select
           end do
-!
-! If normal exit is taken, the card did not contain a blank
+
           if (m .eq. 1) then
               exit
           else if  (m .eq. 40) then
                   write (*, "(1x)") 'data input in error - no blanks'
                   cycle
           end if
-!
-! Initialize hierarchy numbers to get started properly
+
           shier(m) = 0
           ohier(1) = -1
-!
-! Initialize pointers
           j = 2
           k = 1
 
