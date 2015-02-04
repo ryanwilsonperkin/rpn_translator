@@ -17,21 +17,12 @@
 
       integer :: i, j, k, l, m
       integer(1), dimension(40) :: source, shier, opstck, ohier, polish
-      integer(1) :: blank, lparen, rparen, plus, minus, astrsk, slash
       
-      blank = ichar(' ')
-      lparen = ichar('(')
-      rparen = ichar(')')
-      plus = ichar('+')
-      minus = ichar('-')
-      astrsk = ichar('*')
-      slash = ichar('/')
-
       do
           shier = 0
           ohier = 0
-          opstck = blank
-          polish = blank
+          opstck = ichar(' ')
+          polish = ichar(' ')
 
           read (*, "(40a)") source
 !
@@ -40,16 +31,20 @@
 ! It is assumed that if a character is not an operator or a
 ! parenthesis, it is a variable.
           do m = 1, 40
-              if (source(m) .eq. blank) exit
-!
-! Set shier(m) to zero, then change it if the character is an operator
-              shier(m) = 0
-              if (source(m) .eq. lparen) shier(m) = 1
-              if (source(m) .eq. rparen) shier(m) = 2
-              if (source(m) .eq. plus
-     1            .or. source(m) .eq. minus) shier(m) = 3
-              if (source(m) .eq. astrsk 
-     1            .or. source(m) .eq. slash) shier(m) = 4
+              select case(source(m))
+              case (ichar(' '))
+                  exit
+              case (ichar('('))
+                  shier(m) = 1
+              case (ichar(')'))
+                  shier(m) = 2
+              case (ichar('+'), ichar('-'))
+                  shier(m) = 3
+              case (ichar('*'), ichar('/'))
+                  shier(m) = 4
+              case default
+                  shier(m) = 0
+              end select
           end do
 !
 ! If normal exit is taken, the card did not contain a blank
