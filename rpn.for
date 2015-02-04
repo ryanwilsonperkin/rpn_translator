@@ -32,8 +32,7 @@
           ohier = 0
           opstck = blank
           polish = blank
-!
-! Read a 'data' card
+
           read (*, "(40a)") source
 !
 ! In the following do-loop, m points to input columns, from left to right
@@ -44,7 +43,7 @@
               if (source(m) .eq. blank) exit
 !
 ! Set shier(m) to zero, then change it if the character is an operator
-!     shier(m) = 0
+              shier(m) = 0
               if (source(m) .eq. lparen) shier(m) = 1
               if (source(m) .eq. rparen) shier(m) = 2
               if (source(m) .eq. plus
