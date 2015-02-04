@@ -47,8 +47,8 @@
           if (m .eq. 1) then
               exit
           else if  (m .eq. 40) then
-                  write (*, "(1x)") 'data input in error - no blanks'
-                  cycle
+              write (*, "(1x)") 'data input in error - no blanks'
+              cycle
           end if
 
           shier(m) = 0
