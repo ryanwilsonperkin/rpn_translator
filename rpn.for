@@ -74,10 +74,10 @@
           k = 1
 
           do i = 1, m
-              if ( shier(i) .eq. 0 ) then !go to 90
+              if ( shier(i) .eq. 0 ) then
                   polish(k) = source(i)
                   k = k + 1
-              else if ( shier(i) .eq. 2 ) then !go to 80
+              else if ( shier(i) .eq. 2 ) then
                   j = j - 1
               else
                   opstck(j) = source(i)
