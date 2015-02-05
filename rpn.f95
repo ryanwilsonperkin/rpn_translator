@@ -88,6 +88,7 @@ do
     end do
 
     ! Print output string
-    write (*, "(1x,a7,40a,/,1x,a7,40a)") "INPUT: ", source, "RPN:   ", polish
+    write (*, "(1x,a7,40a)") "INPUT: ", source
+    write (*, "(1x,a7,40a)") "RPN:   ", polish
 end do
 end 
