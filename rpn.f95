@@ -23,6 +23,10 @@ integer :: i, j, k, m
 character, dimension(40) :: op_stack, polish_str, source_str
 integer, dimension(40) :: source_hier, op_hier
 
+write (*,*) "RPN translator"
+write (*,*) "Enter algebraic expressions to convert to rpn"
+write (*,*) "Valid operators are: + - * / ^"
+
 do
     ! Initialize hierarchy arrays to all 0s
     source_hier = 0
@@ -33,6 +37,7 @@ do
     polish_str = ' '
 
     ! Read (up to) 40 characters from input into source_str array
+    write (*,*) "Enter an algebraic expression: "
     read (*, "(40a)") source_str
 
     ! Determine hierarchy of characters in input stream
@@ -95,7 +100,7 @@ do
     end do
 
     ! Print output string
-    write (*, "(1x,a7,40a)") "INPUT: ", source_str
-    write (*, "(1x,a7,40a)") "RPN:   ", polish_str
+    write (*, "(1x,a7,40a)") "Input: ", source_str
+    write (*, "(1x,a16,40a)") "RPN equivalent: ", polish_str
 end do
 end 
