@@ -50,7 +50,6 @@ do
         cycle
     end if
 
-    shier(m) = 0
     ohier(1) = -1
     j = 2
     k = 1
