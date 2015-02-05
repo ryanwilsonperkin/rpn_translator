@@ -11,7 +11,7 @@
 !     i          pointer to index string (source and shier)
 !     j          pointer to operator stack (opstck and ohier)
 !     k          pointer to output string (polish)
-
+program rpn
 implicit none
 
 integer :: i, j, k, m
