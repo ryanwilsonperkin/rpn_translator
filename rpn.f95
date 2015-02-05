@@ -48,6 +48,8 @@ do
             shier(m) = 3
         case ('*', '/')
             shier(m) = 4
+        case ('^')
+            shier(m) = 5
         case default
             shier(m) = 0
         end select
