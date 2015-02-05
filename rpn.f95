@@ -16,7 +16,7 @@ implicit none
 
 integer :: i, j, k, m
 character, dimension(40) :: opstck, polish, source
-integer(1), dimension(40) :: shier, ohier
+integer, dimension(40) :: shier, ohier
 
 do
     shier = 0
