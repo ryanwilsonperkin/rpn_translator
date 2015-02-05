@@ -1,4 +1,8 @@
-! Translating algrbraic expressions to polish notation
+! RPN
+! Translate algrbraic expressions to polish notation
+! Program prompts for algebraic string as input
+! Converts input to equivalent reverse polish notation string
+! Limited to 40 characters of input
 !
 ! The variable names and their meanings are as follows:
 !     source     the input string, in normal algebraic form
@@ -11,6 +15,7 @@
 !     i          pointer to index string (source and shier)
 !     j          pointer to operator stack (opstck and ohier)
 !     k          pointer to output string (polish)
+
 program rpn
 implicit none
 
