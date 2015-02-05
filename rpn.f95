@@ -19,13 +19,18 @@ character, dimension(40) :: opstck, polish, source
 integer, dimension(40) :: shier, ohier
 
 do
+    ! Initialize hierarchy arrays to all 0s
     shier = 0
     ohier = 0
+
+    ! Initialize character arrays to all blanks
     opstck = ' '
     polish = ' '
 
+    ! Read (up to) 40 characters from input into source array
     read (*, "(40a)") source
 
+    ! Determine hierarchy of characters in input stream
     do m = 1, 40
         select case(source(m))
         case (' ')
@@ -43,17 +48,24 @@ do
         end select
     end do
 
+    ! Program exits when first character of input is a blank
     if (m .eq. 1) then
         exit
+
+    ! Error message if no blank at enf of input
     else if  (m .eq. 40) then
         write (*, "(1x)") 'data input in error - no blanks'
         cycle
     end if
 
+    ! Initialize start of output hierarchy smaller than possible source values
     ohier(1) = -1
+
+    ! Initialize operator stack and output string pointers
     j = 2
     k = 1
 
+    ! Analyze source hierarchy values and build output string
     do i = 1, m
         if (shier(i) .eq. 0) then
             polish(k) = source(i)
@@ -67,6 +79,7 @@ do
             cycle
         end if
 
+        ! Pop higher values from operator hierarchy into output string
         do while (ohier(j-1) .ge. shier(i + 1))
             polish(k) = opstck(j-1)
             k = k + 1
@@ -74,6 +87,7 @@ do
         end do
     end do
 
+    ! Print output string
     write (*, "(1x,a7,40a,/,1x,a7,40a)") "INPUT: ", source, "RPN:   ", polish
 end do
 end 
