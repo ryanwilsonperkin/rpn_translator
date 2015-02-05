@@ -7,7 +7,6 @@
 !     ohier      array containing the hierarchy numbers of the operators
 !     polish     the output string, in polish notation
 !
-!     l          do index used in initializing
 !     m          do index used in setting up shier array
 !     i          pointer to index string (source and shier)
 !     j          pointer to operator stack (opstck and ohier)
@@ -15,7 +14,7 @@
 
 implicit none
 
-integer :: i, j, k, l, m
+integer :: i, j, k, m
 character, dimension(40) :: opstck, polish, source
 integer(1), dimension(40) :: shier, ohier
 
@@ -57,10 +56,10 @@ do
     k = 1
 
     do i = 1, m
-        if ( shier(i) .eq. 0 ) then
+        if (shier(i) .eq. 0) then
             polish(k) = source(i)
             k = k + 1
-        else if ( shier(i) .eq. 2 ) then
+        else if (shier(i) .eq. 2) then
             j = j - 1
         else
             opstck(j) = source(i)
@@ -69,7 +68,7 @@ do
             cycle
         end if
 
-        do while ( ohier(j-1) .ge. shier(i + 1) )
+        do while (ohier(j-1) .ge. shier(i + 1))
             polish(k) = opstck(j-1)
             k = k + 1
             j = j - 1
